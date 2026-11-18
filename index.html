@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f3e9" />
+  <meta name="description" content="Kana Studio — học đọc và luyện viết Hiragana, Katakana trên điện thoại." />
+  <title>Kana Studio — Học Hiragana & Katakana</title>
+  <link rel="stylesheet" href="styles.css?v=20261118-stroke-order-6" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="brand" data-route="home" aria-label="Về trang Hôm nay">
+        <span class="brand-mark" aria-hidden="true">か</span>
+        <span><strong>Kana Studio</strong><small>かなを学ぼう</small></span>
+      </button>
+      <div class="top-actions">
+        <span class="streak" title="Chuỗi ngày học thực tế"><span aria-hidden="true">火</span> <b id="streakValue">0</b></span>
+        <button class="icon-button" id="soundToggle" aria-label="Bật hoặc tắt âm thanh" aria-pressed="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5Zm13.5 3a4.5 4.5 0 0 0-2.2-3.87v7.74A4.5 4.5 0 0 0 18.5 12Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section class="screen active" data-screen="home" aria-labelledby="homeTitle">
+        <div class="greeting-row">
+          <div>
+            <p class="eyebrow">Thứ tư · 18 tháng 11</p>
+            <h1 id="homeTitle">Chào buổi sáng, <span>bạn học.</span></h1>
+          </div>
+          <div class="level-ring" aria-label="Đã hoàn thành 34 phần trăm">
+            <span><b id="overallProgressValue">0</b><small>%</small></span>
+          </div>
+        </div>
+
+        <article class="continue-card">
+          <div class="continue-copy">
+            <div class="lesson-kicker"><span class="pulse-dot"></span> <span id="homeLessonKicker">Bắt đầu · 8 phút</span></div>
+            <h2 id="homeLessonTitle">Nguyên âm — あ い う え お</h2>
+            <p id="homeLessonDescription">Học 5 âm nền tảng đầu tiên của Hiragana.</p>
+            <button class="primary-button" data-action="start-lesson"><span id="homeLessonButton">Bắt đầu học</span> <span aria-hidden="true">→</span></button>
+          </div>
+          <div class="hero-kana" aria-hidden="true">
+            <span id="homeHeroKana">あ</span><i id="homeHeroRomaji">a</i>
+          </div>
+        </article>
+
+        <div class="section-heading">
+          <div><p class="eyebrow">Lộ trình của bạn</p><h2 id="pathHeading">Hiragana từ đầu</h2></div>
+          <button class="text-button" data-route="chart">Xem bảng chữ</button>
+        </div>
+        <div class="path-list" id="pathList" aria-label="Lộ trình Hiragana"></div>
+
+        <div class="section-heading compact" id="smartReviewHeading">
+          <div><p class="eyebrow">Ôn tập thông minh</p><h2 id="smartReviewTitle">3 chữ cần nhớ lại</h2></div>
+          <button class="text-button" data-route="review">Ôn ngay</button>
+        </div>
+        <div class="weak-strip" id="homeWeakStrip"></div>
+      </section>
+
+      <section class="screen" data-screen="lesson" aria-labelledby="lessonIntroTitle">
+        <div class="lesson-topline">
+          <button class="back-button" data-back="home" aria-label="Quay lại Hôm nay"><span aria-hidden="true">←</span></button>
+          <span class="lesson-label">Bài học mới</span>
+          <span class="lesson-step-label" id="lessonNumber">Bài 1</span>
+        </div>
+        <div class="lesson-intro-head">
+          <span class="lesson-seal" id="lessonSeal">一</span>
+          <p class="eyebrow">Hiragana · Nền tảng</p>
+          <h1 id="lessonIntroTitle">Nguyên âm</h1>
+          <p id="lessonIntroDescription">Khởi đầu với 5 âm nền tảng. Mỗi chữ đi qua 5 bước: phát âm, xem nét, nhận mặt chữ, viết có mẫu và viết không mẫu.</p>
+        </div>
+        <div class="lesson-character-track" id="lessonCharacterTrack" aria-label="Các chữ trong bài"></div>
+        <div class="lesson-method">
+          <div><span>耳</span><b>Phát âm</b><small>Gắn chữ với âm</small></div>
+          <i>→</i>
+          <div><span>順</span><b>Xem nét</b><small>Nhớ thứ tự</small></div>
+          <i>→</i>
+          <div><span>目</span><b>Nhận diện</b><small>Chọn đúng âm</small></div>
+          <i>→</i>
+          <div><span>手</span><b>Viết mẫu</b><small>Đúng từng nét</small></div>
+          <i>→</i>
+          <div><span>記</span><b>Tự viết</b><small>Viết từ trí nhớ</small></div>
+        </div>
+        <div class="lesson-note"><span>Tip</span><p>Đọc thành tiếng mỗi khi chạm vào một chữ. Âm thanh và vận động sẽ giúp nhớ nhanh hơn.</p></div>
+        <button class="primary-button full" id="beginLesson">Học chữ đầu tiên <span>→</span></button>
+      </section>
+
+      <section class="screen" data-screen="chart" aria-labelledby="chartTitle">
+        <div class="screen-title-row">
+          <div><p class="eyebrow">Thư viện Kana</p><h1 id="chartTitle">Bảng chữ cái</h1></div>
+          <button class="round-action" id="chartInfo" aria-label="Thông tin về bảng chữ">i</button>
+        </div>
+        <div class="segmented" role="tablist" aria-label="Chọn bảng chữ">
+          <button class="active" role="tab" data-script="hiragana" aria-selected="true">あ Hiragana</button>
+          <button role="tab" data-script="katakana" aria-selected="false">ア Katakana</button>
+        </div>
+        <div class="filter-row" role="group" aria-label="Loại âm">
+          <button class="chip active" data-set="basic">Cơ bản <span>46</span></button>
+          <button class="chip" data-set="voiced">Biến âm <span>25</span></button>
+          <button class="chip" data-set="combo">Âm ghép <span>33</span></button>
+          <button class="chip" data-set="marks">Ký hiệu</button>
+        </div>
+        <div class="chart-legend"><span><i class="dot learned"></i> Đã thuộc</span><span><i class="dot learning"></i> Đang học</span><span><i class="dot new"></i> Chưa học</span></div>
+        <div id="kanaGrid" class="kana-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="screen" data-screen="character" aria-labelledby="characterTitle">
+        <div class="lesson-topline">
+          <button class="back-button" data-back="chart" aria-label="Quay lại bảng chữ"><span aria-hidden="true">←</span></button>
+          <span class="lesson-label">Chi tiết chữ</span>
+          <button class="icon-button" id="favoriteButton" aria-label="Đánh dấu chữ cần ôn" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.47 6.03.88-4.36 4.25 1.03 6L12 16.77 6.6 19.6l1.03-6-4.36-4.25 6.03-.88L12 3Z"/></svg>
+          </button>
+        </div>
+        <div class="character-stage">
+          <div class="character-meta"><span id="charFamily">Hiragana · Hàng K</span><span id="charStatus">Đang học</span></div>
+          <div class="character-glyph" id="characterTitle">か</div>
+          <button class="sound-button" id="speakChar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5Zm11 1.2v3.6c.63-.46 1-1.1 1-1.8s-.37-1.34-1-1.8Z"/></svg><span>ka</span></button>
+        </div>
+        <div class="memory-card">
+          <span class="memory-icon" aria-hidden="true">記</span>
+          <div><small>Mẹo ghi nhớ</small><p id="mnemonicText">Một chiếc <b>ca</b> có quai cong và một nét chéo.</p></div>
+        </div>
+        <div class="example-block">
+          <div class="section-heading compact"><div><p class="eyebrow">Ví dụ</p><h2>Gặp chữ này trong từ</h2></div></div>
+          <div class="word-example"><div><b id="exampleWord">かさ</b><span id="exampleRomaji">kasa</span></div><p id="exampleMeaning">cái ô</p><button class="mini-sound" id="speakWord" aria-label="Nghe từ ví dụ">▶</button></div>
+        </div>
+        <button class="primary-button full" id="practiceCurrentChar" data-route="pronounce">Luyện phát âm chữ này <span>→</span></button>
+      </section>
+
+      <section class="screen" data-screen="pronounce" aria-labelledby="pronounceTitle">
+        <div class="lesson-topline">
+          <button class="back-button" data-back="character" aria-label="Quay lại chi tiết chữ"><span aria-hidden="true">←</span></button>
+          <div class="lesson-progress" aria-label="Tiến độ bài học"><i id="pronounceProgress" style="width:15%"></i></div>
+          <button class="close-button" data-route="home" aria-label="Đóng bài học">×</button>
+        </div>
+        <div class="prompt-block pronunciation-prompt">
+          <p class="eyebrow">Bước 1/5 · Học phát âm</p>
+          <h1 id="pronounceTitle">Đọc chữ này thành tiếng</h1>
+          <p>Không nhìn phiên âm. Hãy quan sát mặt chữ và nói một lần thật rõ.</p>
+        </div>
+        <div class="pronunciation-card" id="pronunciationCard">
+          <div class="pronunciation-glyph" id="pronunciationGlyph">あ</div>
+          <div class="sound-waves" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <button class="microphone-button" id="startPronunciation" aria-label="Bắt đầu nghe phát âm">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v5a4 4 0 0 0 4 4Zm-7-4h2a5 5 0 0 0 10 0h2a7 7 0 0 1-6 6.92V21h-2v-3.08A7 7 0 0 1 5 11Z"/></svg>
+            <span>Chạm để nói</span>
+          </button>
+        </div>
+        <div class="pronunciation-feedback" id="pronunciationFeedback" role="status" aria-live="polite">
+          <span class="feedback-mark" aria-hidden="true">耳</span>
+          <div><b id="pronunciationStatus">Sẵn sàng nghe</b><p id="pronunciationMessage">Trình duyệt sẽ xin quyền dùng microphone ở lần đầu.</p></div>
+        </div>
+        <div class="heard-result" id="heardResult" hidden><small>Ứng dụng nghe được</small><b id="heardTranscript">—</b></div>
+        <button class="primary-button full" id="pronunciationContinue" disabled>Xem thứ tự nét <span>→</span></button>
+        <button class="text-button pronunciation-skip" id="skipPronunciation" hidden>Bỏ qua bước phát âm</button>
+        <p class="microphone-note">Kana Studio không lưu âm thanh. Tùy trình duyệt, audio có thể được gửi tới dịch vụ nhận dạng của nhà cung cấp.</p>
+      </section>
+
+      <section class="screen" data-screen="write" aria-labelledby="writeTitle">
+        <div class="lesson-topline">
+          <button class="back-button" data-back="character" aria-label="Quay lại"><span aria-hidden="true">←</span></button>
+          <div class="lesson-progress" aria-label="Tiến độ bài học"><i id="writeProgress" style="width:20%"></i></div>
+          <button class="close-button" data-route="home" aria-label="Đóng bài học">×</button>
+        </div>
+        <div class="prompt-block">
+          <p class="eyebrow">Bước 4/5 · Luyện viết có mẫu</p>
+          <h1 id="writeTitle">Viết chữ <span id="writeRomaji">ka</span></h1>
+          <p>Đi theo chữ mờ. Viết chậm và đúng chiều nét.</p>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="traceCanvas" width="640" height="640" aria-label="Vùng luyện viết chữ kana"></canvas>
+          <div class="stroke-badge"><span id="strokeCount">0</span> nét đã vẽ</div>
+        </div>
+        <div class="writing-tools">
+          <button id="undoStroke"><span aria-hidden="true">↶</span> Hoàn tác</button>
+          <button id="clearCanvas"><span aria-hidden="true">⌫</span> Viết lại</button>
+          <button id="showGuide"><span aria-hidden="true">目</span> Ẩn mẫu</button>
+        </div>
+        <button class="primary-button full" id="checkWriting">Kiểm tra nét &amp; tiếp tục <span>→</span></button>
+      </section>
+
+      <section class="screen" data-screen="quiz" aria-labelledby="quizTitle">
+        <div class="lesson-topline">
+          <button class="close-button" data-route="home" aria-label="Đóng bài kiểm tra">×</button>
+          <div class="lesson-progress"><i id="quizProgress" style="width:10%"></i></div>
+          <span class="heart-count" aria-label="Ba lượt"><span aria-hidden="true">♥</span> 3</span>
+        </div>
+        <div class="prompt-block quiz-prompt">
+          <p class="eyebrow">Nhận mặt chữ</p>
+          <h1 id="quizTitle">Âm nào khớp với chữ này?</h1>
+          <button class="quiz-glyph" id="quizSpeak" aria-label="Nghe phát âm"><span id="quizGlyph">し</span><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5Z"/></svg> Nghe</i></button>
+        </div>
+        <div class="answer-grid" id="answerGrid"></div>
+        <div class="quiz-footer">
+          <span id="quizHint">Chọn một đáp án</span>
+          <button class="primary-button" id="checkAnswer" disabled>Kiểm tra</button>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="stroke-demo" aria-labelledby="strokeDemoTitle">
+        <div class="lesson-topline demo-topline">
+          <span class="demo-step-label">Bước 2/5</span>
+          <div class="lesson-progress" aria-label="Tiến độ animation"><i id="strokeDemoProgress" style="width:0%"></i></div>
+          <span class="assessment-counter" id="strokeDemoCounter">1/5</span>
+        </div>
+        <div class="stroke-demo-copy">
+          <p class="eyebrow">Animation thứ tự nét</p>
+          <h1 id="strokeDemoTitle">Cách viết chữ <span id="strokeDemoGlyph">あ</span></h1>
+          <p>Nhìn đầu bút, thứ tự và hướng từng nét. Một câu nhận diện trong nhóm hiện tại sẽ mở ngay sau animation.</p>
+        </div>
+        <div class="stroke-demo-stage" aria-live="polite">
+          <canvas id="strokeDemoCanvas" width="640" height="640" aria-label="Animation thứ tự nét Kana"></canvas>
+          <span class="stroke-demo-badge"><b id="strokeDemoStroke">1</b>/<span id="strokeDemoTotal">3</span> nét</span>
+        </div>
+        <div class="auto-advance-note" id="strokeDemoStatus" role="status">
+          <span aria-hidden="true">▶</span>
+          <p><b>Đang phát mẫu tự động</b><small>Chuyển sang trắc nghiệm mặt chữ sau <span id="strokeDemoSeconds">3</span> giây</small></p>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="draw-test" aria-labelledby="drawTestTitle">
+        <div class="lesson-topline">
+          <button class="close-button" data-route="home" aria-label="Đóng bài kiểm tra">×</button>
+          <div class="lesson-progress" aria-label="Tiến độ bài kiểm tra"><i id="drawTestProgress" style="width:25%"></i></div>
+          <span class="assessment-counter" id="drawTestCounter">2/8</span>
+        </div>
+        <div class="prompt-block draw-test-prompt">
+          <p class="eyebrow" id="drawTestEyebrow">Kiểm tra viết · Không có chữ mẫu</p>
+          <h1 id="drawTestTitle">Viết Kana cho âm</h1>
+          <div class="romaji-prompt" id="drawTestRomaji">a</div>
+           <p id="drawTestInstruction">Viết chữ tương ứng từ trí nhớ. Hệ thống sẽ nhận diện hình dáng trước khi cho bạn tiếp tục.</p>
+        </div>
+        <div class="canvas-wrap test-canvas-wrap">
+          <canvas id="testDrawCanvas" width="640" height="640" aria-label="Vùng kiểm tra viết Kana không có chữ mẫu"></canvas>
+          <div class="stroke-badge"><span id="testStrokeCount">0</span> nét đã vẽ</div>
+        </div>
+        <div class="writing-tools test-writing-tools">
+          <button id="undoTestStroke"><span aria-hidden="true">↶</span> Hoàn tác</button>
+          <button id="clearTestCanvas"><span aria-hidden="true">⌫</span> Viết lại</button>
+        </div>
+        <button class="primary-button full" id="submitDrawTest" disabled>Kiểm tra chữ viết</button>
+        <div class="writing-recognition" id="writingRecognition" role="status" aria-live="polite" hidden>
+          <span class="recognition-icon" id="recognitionIcon" aria-hidden="true">⌁</span>
+          <div><b id="recognitionTitle">Đang nhận diện chữ viết</b><p id="recognitionMessage">Phân tích hình dáng ngay trên thiết bị…</p></div>
+        </div>
+        <div class="draw-answer" id="drawAnswer" hidden>
+          <div><small>Đáp án đúng</small><b id="drawAnswerGlyph">あ</b><span id="drawAnswerRomaji">a</span></div>
+          <p id="drawAnswerMessage">Hình dáng đã vượt qua bước nhận diện. Bạn có thể tiếp tục sang câu kế tiếp.</p>
+          <div class="draw-answer-actions">
+            <button id="retryDrawTest">Viết lại</button>
+            <button class="primary-button" id="confirmDrawTest">Tiếp tục <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="review" aria-labelledby="reviewTitle">
+        <div class="screen-title-row">
+          <div><p class="eyebrow">Lặp lại ngắt quãng</p><h1 id="reviewTitle">Ôn tập</h1></div>
+          <div class="review-count"><b id="reviewDueCount">8</b><span>đến hạn</span></div>
+        </div>
+        <article class="review-hero">
+          <div><span class="overline">Phiên hôm nay</span><h2>Giữ trí nhớ thật sắc</h2><p id="reviewHeroMeta">0 chữ · khoảng 1 phút</p><button class="primary-button" data-action="start-review">Bắt đầu ôn</button></div>
+          <div class="review-stack" id="reviewStack" aria-hidden="true"></div>
+        </article>
+        <div class="section-heading"><div><p class="eyebrow">Điểm cần chú ý</p><h2 id="reviewFocusTitle">Chữ đến hạn</h2></div></div>
+        <div class="confusion-list" id="reviewFocusList"></div>
+        <div class="section-heading compact"><div><p class="eyebrow">Tuần này</p><h2>Nhịp học</h2></div><span class="positive">+18%</span></div>
+        <div class="week-chart" aria-label="Biểu đồ số phút học trong tuần">
+          <div><i style="height:38%"></i><span>T2</span></div><div><i style="height:62%"></i><span>T3</span></div><div class="today"><i style="height:86%"></i><span>T4</span></div><div><i style="height:22%"></i><span>T5</span></div><div><i style="height:0%"></i><span>T6</span></div><div><i style="height:0%"></i><span>T7</span></div><div><i style="height:0%"></i><span>CN</span></div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="profile" aria-labelledby="profileTitle">
+        <div class="profile-header">
+          <div class="avatar"><span>学</span></div>
+          <div><p class="eyebrow">Hồ sơ học tập</p><h1 id="profileTitle">Bạn học Kana</h1><p>Bắt đầu từ 12 tháng 11, 2026</p></div>
+          <button class="round-action" aria-label="Cài đặt">⚙</button>
+        </div>
+        <div class="stats-grid">
+          <div><span>火</span><b id="streakStat">0 ngày</b><small>Chuỗi hiện tại</small></div>
+          <div><span>字</span><b id="knownCount">17 chữ</b><small>Đã thuộc</small></div>
+          <div><span>分</span><b>42 phút</b><small>Tuần này</small></div>
+        </div>
+        <div class="section-heading"><div><p class="eyebrow">Tiến độ tổng thể</p><h2>Hai bảng chữ</h2></div></div>
+        <div class="progress-list">
+          <button data-open-script="hiragana"><span class="script-medal hira">あ</span><span><b>Hiragana</b><small id="hiraProgressText">0 trên 114 tổ hợp</small><i><em id="hiraProgressBar" style="width:0%"></em></i></span><strong id="hiraProgressPercent">0%</strong></button>
+          <button data-open-script="katakana"><span class="script-medal kata">ア</span><span><b>Katakana</b><small id="kataProgressText">0 trên 116 tổ hợp</small><i><em id="kataProgressBar" style="width:0%"></em></i></span><strong id="kataProgressPercent">0%</strong></button>
+        </div>
+        <div class="section-heading compact"><div><p class="eyebrow">Thành tựu</p><h2>Dấu mốc</h2></div></div>
+        <div class="achievement-row">
+          <div class="earned"><span>一</span><b>Chữ đầu tiên</b></div><div class="earned"><span>五</span><b>5 ngày liền</b></div><div><span>百</span><b>100 câu đúng</b></div>
+        </div>
+        <p class="app-version">Offline build 2026.11.18.6 · Stroke order flow</p>
+      </section>
+
+      <section class="screen" data-screen="complete" aria-labelledby="completeTitle">
+        <div class="completion-screen">
+          <div class="completion-burst" aria-hidden="true"><span>合</span></div>
+          <p class="eyebrow">Bài học hoàn thành</p>
+          <h1 id="completeTitle">Bạn đã thuộc nhóm nguyên âm!</h1>
+          <p id="completeMessage">あ・い・う・え・お đã được thêm vào bộ nhớ dài hạn.</p>
+          <div class="completion-stats"><div><b id="completeAccuracy">100%</b><small>Chính xác</small></div><div><b id="completeChars">5</b><small>Chữ mới</small></div><div><b>+20</b><small>Điểm XP</small></div></div>
+          <div class="next-unlock"><span id="nextUnlockGlyph">か</span><div><small>Vừa mở khóa</small><b id="nextUnlockTitle">Hàng K</b></div></div>
+          <button class="primary-button full" id="continueNextLesson">Học nhóm tiếp theo <span>→</span></button>
+          <button class="text-button completion-home" data-route="home">Về Hôm nay</button>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Điều hướng chính">
+      <button class="active" data-route="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v10h-6v-6H9v6H3V11Z"/></svg><span>Hôm nay</span></button>
+      <button data-route="chart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h7a3 3 0 0 1 3 3v15a4 4 0 0 0-4-4H4V3Zm16 0h-4v14h1a3 3 0 0 1 3 1.35V3Z"/></svg><span>Bảng chữ</span></button>
+      <button class="practice-nav" data-route="quiz" aria-label="Học tập"><span class="practice-mark" aria-hidden="true">練</span><span class="practice-label">Học tập</span></button>
+      <button data-route="review" id="reviewNav" disabled aria-disabled="true" aria-label="Ôn tập đang khóa — hoàn thành một bài kiểm tra cuối để mở"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V2l-4 4 4 4V7a5 5 0 1 1-4.58 3H5.35A7 7 0 1 0 12 5Z"/></svg><span>Ôn tập</span></button>
+      <button data-route="profile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-9 9a9 9 0 0 1 18 0H3Z"/></svg><span>Hồ sơ</span></button>
+    </nav>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="modal-backdrop" id="modalBackdrop" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Đóng">×</button>
+        <span class="modal-seal">かな</span>
+        <h2 id="modalTitle">Học đủ, học đúng</h2>
+        <p id="modalText">Mỗi bảng có 46 chữ cơ bản. App còn gom riêng biến âm, âm ghép và ký hiệu nhỏ để bạn không bỏ sót.</p>
+        <button class="primary-button full" id="modalOkay">Đã hiểu</button>
+      </div>
+    </div>
+  </div>
+  <script src="kana-db.js?v=20261118-stroke-order-6"></script>
+  <script src="kana-strokes.js?v=20261118-stroke-order-6"></script>
+  <script src="app.js?v=20261118-stroke-order-6"></script>
+</body>
+</html>

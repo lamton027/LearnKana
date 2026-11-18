@@ -1,0 +1,100 @@
+{
+  "contract": "../DESIGN-RESEARCH.md#design-contract",
+  "targetViewports": ["320x568", "375x667", "375x812", "390x844", "360x800", "1440x900"],
+  "accessibility": {
+    "status": "pass",
+    "evidence": "Các thao tác chính dùng button semantic; nút microphone có aria-label; phản hồi phát âm dùng role=status và aria-live; tab có aria-selected; focus-visible rõ; touch target chính 43-58px. Màn mẫu stroke không có tương tác bắt buộc; prefers-reduced-motion hiển thị mẫu hoàn chỉnh rồi vẫn tự chuyển."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Đã render thực tế ở iPhone SE đời đầu 320x568, iPhone SE 375x667, iPhone XS 375x812, 360x800, 390x844 và 1440x900. Màn stroke demo thu gọn canvas ở chiều cao 568px để hiện đủ animation và thông báo tự chuyển. Bottom navigation luôn dùng lưới 5 cột và các màn học không tràn ngang."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "not-applicable",
+      "reason": "Prototype dùng toàn bộ dữ liệu cục bộ, không có request dữ liệu bất đồng bộ."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "Khi kana-known trống, tiêu đề và dải Ôn tập thông minh trên trang chủ bị ẩn; tab Ôn tập vẫn giữ cột thứ tư trong lưới 5 tab nhưng ở trạng thái disabled có aria-label giải thích điều kiện mở. Truy cập route review bằng code vẫn quay về trang chủ."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "Luyện phát âm phân biệt lỗi quyền, microphone, âm thanh, mạng và API. Nhận diện chữ viết từ chối nét quá ít, hình chữ X ngẫu nhiên, chữ gần với candidate khác hoặc hình có điểm khớp thấp; UI giữ canvas để hoàn tác/xóa/viết lại và không lộ đáp án."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "Chữ chưa có mnemonic/từ ví dụ riêng dùng nội dung fallback và vẫn mở được toàn bộ luồng chi tiết/luyện viết."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "Smoke test headless xác nhận mỗi chữ nguyên âm đi đủ bốn stage. Viết không mẫu trả kết quả trực tiếp: sai viết lại, đúng báo đã học được cách viết mà không có xác nhận trung gian. Trắc nghiệm chỉ dùng lựa chọn trong nhóm, hiển thị kết quả ngắn rồi tự chuyển. Assessment không lặp màn mẫu và bước 8/8 mới lưu mastery."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "Microphone chỉ được yêu cầu sau thao tác Chạm để nói; UI giải thích lần đầu sẽ xin quyền, mô tả audio không được app lưu và cung cấp đường bỏ qua khi quyền bị từ chối."
+    }
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "320x568",
+      "artifact": "stroke-demo-320x568.png",
+      "observation": "Màn mẫu trên iPhone SE đời đầu hiển thị đủ tiêu đề, canvas, đầu bút, bộ đếm nét và thông báo tự chuyển trong một viewport; không có button chờ người học."
+    },
+    {
+      "viewport": "320x568",
+      "artifact": "iphone-se1-320x568.png",
+      "observation": "Ở iPhone SE đời đầu, đủ 5 tab nằm trọn chiều ngang; Ôn tập hiển thị trạng thái khóa và tab Học tập có hai hàng tách biệt, không chồng lấn."
+    },
+    {
+      "viewport": "375x667",
+      "artifact": "iphone-se-375x667.png",
+      "observation": "Ở iPhone SE, dấu 練 và nhãn Học tập nằm ở hai hàng tách biệt trong nút giữa; đủ 5 vùng tab không chồng lấn và thẻ bài không tràn ngang."
+    },
+    {
+      "viewport": "375x812",
+      "artifact": "iphone-xs-375x812.png",
+      "observation": "Ở iPhone XS, thanh đáy hiển thị đủ Hôm nay, Bảng chữ, Học tập và Hồ sơ; nút đỏ nằm hoàn toàn trong hàng biểu tượng, có khoảng hở rõ trước nhãn Học tập."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "home-390x844.png",
+      "observation": "Màn Hôm nay với tiến độ trống ẩn khối nội dung Ôn tập thông minh nhưng vẫn giữ đủ 5 cột điều hướng; tab Ôn tập được làm mờ và khóa cho đến khi có chữ đã thuộc."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "lesson-vowels-390x844.png",
+      "observation": "Màn giới thiệu Nguyên âm hiển thị đủ あ・い・う・え・お, ba bước Nhìn/Nghe/Viết và CTA học chữ đầu tiên trong một viewport mobile."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "pronunciation-390x844.png",
+      "observation": "Màn luyện phát âm hiển thị Kana lớn, CTA microphone, giải thích quyền, vùng phản hồi live và nút viết bị khóa trước khi phát âm đúng; không tràn ở 390px."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "draw-test-390x844.png",
+      "observation": "Bước 2/8 hiển thị romaji lớn, canvas trắng phủ đầy vùng vẽ với đường căn giữa, không có glyph chìm; nút kiểm tra chữ viết bị khóa trước khi có nét và không có hành động bỏ qua."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "character-blank-write-390x844.png",
+      "observation": "Stage 4/4 của từng chữ hiển thị romaji lớn, canvas hoàn toàn không có glyph chìm và CTA nhận diện ở cuối viewport; chỉ sau kết quả đúng người học mới hoàn thành chữ hiện tại."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "stroke-demo-390x844.png",
+      "observation": "Animation dùng dữ liệu stroke-order thật: nét hiện tại màu đỏ có đầu bút, các nét sắp tới làm mờ, badge hiển thị 1/3 và UI thông báo tự chuyển sau ba giây."
+    },
+    {
+      "viewport": "360x800",
+      "artifact": "chart-360x800.png",
+      "observation": "Màn Bảng chữ: segmented control, bộ lọc cuộn ngang và lưới Kana 5 cột vừa màn hình hẹp, nhãn romaji không tràn."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "desktop-1440x900.png",
+      "observation": "Trên desktop, app giữ khung mobile 480px ở trung tâm, độ rộng đọc ổn định và thanh điều hướng bám đáy khung."
+    }
+  ]
+}
